@@ -19,7 +19,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool advanced = false;
+  bool advanced = Preferences.instance.getBool(Preferences.advanced) ?? false;
 
   String _getAccuracyLabel(String? key) {
     return switch (key) {
@@ -189,6 +189,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: Text(AppLocalizations.of(context)!.advancedLabel),
             value: advanced,
             onChanged: (value) {
+              Preferences.instance.setBool(Preferences.advanced, value);
               setState(() => advanced = value);
             },
           ),
