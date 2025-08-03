@@ -6,6 +6,7 @@ import 'package:flutter_background_geolocation/flutter_background_geolocation.da
 import 'package:traccar_client/main.dart';
 import 'package:traccar_client/password_service.dart';
 import 'package:traccar_client/qr_code_screen.dart';
+import 'package:traccar_client/utils.dart';
 import 'package:wakelock_partial_android/wakelock_partial_android.dart';
 
 import 'l10n/app_localizations.dart';
@@ -38,7 +39,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final controller = TextEditingController(text: initialValue);
     final errorMessage = AppLocalizations.of(context)!.invalidValue;
 
-    final result = await showDialog<String>(
+    var result = await showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
         scrollable: true,
@@ -63,11 +64,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     if (result != null && result.isNotEmpty) {
       if (key == Preferences.url) {
-        final uri = Uri.tryParse(result);
-        if (uri == null || uri.host.isEmpty || !(uri.scheme == 'http' || uri.scheme == 'https')) {
+        final uris = Utils.parseStringForUris(result);
+        
+        if (uris.isEmpty) {
           messengerKey.currentState?.showSnackBar(SnackBar(content: Text(errorMessage)));
           return;
         }
+        result = uris.join(";");
       }
       if (isInt) {
         int? intValue = int.tryParse(result);
