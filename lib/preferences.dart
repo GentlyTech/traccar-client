@@ -91,7 +91,7 @@ class Preferences {
         _ => bg.Config.DESIRED_ACCURACY_MEDIUM,
       },
       autoSync: false,
-      url: _formatUrl(instance.getString(url)),
+      url: instance.getString(url),
       params: {
         'device_id': instance.getString(id),
       },
@@ -119,13 +119,6 @@ class Preferences {
       ),
       showsBackgroundLocationIndicator: false,
     );
-  }
-
-  static String? _formatUrl(String? url) {
-    if (url == null) return null;
-    final uri = Uri.parse(url);
-    if ((uri.path.isEmpty || uri.path == '') && !url.endsWith('/')) return '$url/';
-    return url;
   }
 
   static String _locationTemplate() {

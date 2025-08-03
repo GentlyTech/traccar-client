@@ -72,10 +72,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
         }
 
         if (Platform.isAndroid) {
-          result = uris.join(";");
+          result = Utils.urisToString(uris);
         }
         else {
-          result = uris.first.toString();
+          result = Utils.formatUri(uris.first);
         }
       }
       if (isInt) {
