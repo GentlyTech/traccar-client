@@ -70,7 +70,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           messengerKey.currentState?.showSnackBar(SnackBar(content: Text(errorMessage)));
           return;
         }
-        result = uris.join(";");
+
+        if (Platform.isAndroid) {
+          result = uris.join(";");
+        }
+        else {
+          result = uris.first.toString();
+        }
       }
       if (isInt) {
         int? intValue = int.tryParse(result);
