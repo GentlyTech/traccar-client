@@ -1,3 +1,5 @@
+import 'package:traccar_client/location_cache.dart';
+
 class Utils {
   static List<Uri> parseStringForUris(String str, {String delimiter = ";"}) {
     final List<Uri> results = [];
@@ -38,5 +40,14 @@ class Utils {
       return '$uri/';
     }
     return uri.toString();
+  }
+
+  static Uri generateUriWithLocation(Uri uri, Location location) {
+    return uri.replace(path: "", queryParameters: {
+      "heading": location.heading,
+      "timestamp": location.timestamp,
+      "lat": location.latitude,
+      "lon": location.longitude
+    });
   }
 }
